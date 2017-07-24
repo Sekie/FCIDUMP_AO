@@ -180,19 +180,29 @@ int main()
                     for (int l = 0; l < NumAO; l++)
                     {
                         tmpDouble = 0;
-                        for(int a = 0; a < NumAO; a++)
+                        for (int n = 0; n < NumAO; n++)
                         {
-                            for(int b = 0; b < NumAO; b++)
+                            for (int m = 0; m < NumAO; m++)
                             {
-                                for(int c = 0; c < NumAO; c++)
+                                for (int o = 0; o < NumAO; o++)
                                 {
-                                    for(int d = 0; d < NumAO; d++)
+                                    for (int p = 0; p < NumAO; p++)
                                     {
-                                        tmpDouble +=  InvCoeff(a, i) * InvCoeff(b, j) * InvCoeff(c, k) * InvCoeff(d, l)
-                                                    * Integrals[std::to_string(a + 1) + " " + std::to_string(b + 1) + " " + std::to_string(c + 1) + " " + std::to_string(d + 1)];
-                                        //tmpDouble +=  InvCoeff(a, TwoElectronIndexes[i][0] - 1) * InvCoeff(b, TwoElectronIndexes[i][1] - 1) * InvCoeff(c, TwoElectronIndexes[i][2] - 1) * InvCoeff(d, TwoElectronIndexes[i][3] - 1)
-                                        //            * Integrals[std::to_string(a + 1) + " " + std::to_string(b + 1) + " " + std::to_string(c + 1) + " " + std::to_string(d + 1)];
-                                        //idumpAO << Integrals[std::to_string(a + 1) + " " + std::to_string(b + 1) + " " + std::to_string(c + 1) + " " + std::to_string(d + 1)] << "\t" << a + 1 << "\t" << b + 1 << "\t" << c + 1 << "\t" << d + 1 << "\t" << InvCoeff(a, TwoElectronIndexes[i][0] - 1) << "\t" << InvCoeff(b, TwoElectronIndexes[i][1] - 1) << "\t" << InvCoeff(c, TwoElectronIndexes[i][2] - 1) << "\t" << InvCoeff(d, TwoElectronIndexes[i][3] - 1) << std::endl;
+                                        for(int a = 0; a < NumAO; a++)
+                                        {
+                                            for(int b = 0; b < NumAO; b++)
+                                            {
+                                                for(int c = 0; c < NumAO; c++)
+                                                {
+                                                    for(int d = 0; d < NumAO; d++)
+                                                    {
+                                                        tmpDouble +=  OverlapMatrix(n, i) * OverlapMatrix(m, j) * OverlapMatrix(k, o) * OverlapMatrix(l, p)
+                                                                    * InvCoeff(a, n) * InvCoeff(b, m) * InvCoeff(c, o) * InvCoeff(d, p)
+                                                                    * Integrals[std::to_string(a + 1) + " " + std::to_string(b + 1) + " " + std::to_string(c + 1) + " " + std::to_string(d + 1)];
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -208,13 +218,18 @@ int main()
             for (int j = 0; j < NumAO; j++)
             {
                 tmpDouble = 0;
-                for(int a = 0; a < NumAO; a++)
+                for (int n = 0; n < NumAO; n++)
                 {
-                    for(int b = 0; b < NumAO; b++)
+                    for (int m = 0; m < NumAO; m++)
                     {
-                        tmpDouble +=  InvCoeff(a, i) * InvCoeff(b, j)
-                                    * Integrals[std::to_string(a + 1) + " " + std::to_string(b + 1) + " 0 0"];       
-                        //idumpAO << Integrals[std::to_string(a + 1) + " " + std::to_string(b + 1) + " 0 0"] << "\t" << a + 1 << "\t" << b + 1 << std::endl;
+                        for(int a = 0; a < NumAO; a++)
+                        {
+                            for(int b = 0; b < NumAO; b++)
+                            {
+                                tmpDouble +=  OverlapMatrix(n, i) * OverlapMatrix(j, m) * InvCoeff(a, n) * InvCoeff(b, m)
+                                            * Integrals[std::to_string(a + 1) + " " + std::to_string(b + 1) + " 0 0"];
+                            }
+                        }
                     }
                 }
                 idumpAO << tmpDouble << "\t" << i + 1 << "\t" << j + 1 << "\t0\t0" << std::endl;
